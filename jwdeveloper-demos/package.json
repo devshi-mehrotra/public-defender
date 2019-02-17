@@ -1,0 +1,35 @@
+{
+  "name": "jwdeveloper-demos",
+  "version": "0.0.0",
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-contrib-clean": "^0.4.1",
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^0.4.1",
+    "grunt-contrib-less": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "jw-design-ui-toolkit": "github:jwplayer/jw-design-ui-toolkit",
+    "load-grunt-tasks": "^3.5.2"
+  },
+  "dependencies": {
+    "grunt-mustache-render": "^1.9.2",
+    "highlight.js": "^9.13.1",
+    "mustache": "^2.2.1"
+  },
+  "description": "This repository is for managing the [JW Player Developer Demos](//developer.jwplayer.com/jw-player/demos/). It includes demos and code samples from the JW Player team as well as a Developer Showcase highlighting demos submitted by our developer community.",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwplayer/jwdeveloper-demos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwplayer/jwdeveloper-demos/issues"
+  },
+  "homepage": "https://github.com/jwplayer/jwdeveloper-demos#readme"
+}
