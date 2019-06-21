@@ -1,0 +1,21 @@
+# serverless.yml
+
+service: ss-part2
+
+provider:
+  name: aws
+  runtime: python2.7
+  region: us-east-1
+  role: arn:aws:iam::109998853544:role/lambda-s3-role
+  timeout: 900
+
+functions:
+  tv:
+    handler: handler.main
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
