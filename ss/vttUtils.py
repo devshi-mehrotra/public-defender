@@ -30,6 +30,7 @@ import json
 import boto3
 import re
 import codecs
+import itertools
 from audioUtils import *
 
 
@@ -177,7 +178,16 @@ def getPhrasesFromTranscript( transcript ):
 	# Now create phrases from the translation
 	ts = json.loads( transcript )
 	items = ts['results']['items']
-	#print( items )
+	print( ts['results'])
+	print(ts['results']['speaker_labels'])
+	print(ts['results']['speaker_labels']['segments'])
+	# print(ts['results']['speaker_labels']['segments']['items'])
+	segments = ts['results']['speaker_labels']['segments']
+	speaker_label_items = []
+	for segment in segments:
+		speaker_label_items += segment["items"]
+	print(speaker_label_items)
+
 	
 	#set up some variables for the first pass
 	phrase =  newPhrase()
@@ -188,12 +198,15 @@ def getPhrasesFromTranscript( transcript ):
 
 	print "==> Creating phrases from transcript..."
 
-	for item in items:
+	for item, speaker_label in itertools.izip(items, speaker_label_items):
+
+		print(item, speaker_label)
 
 		# if it is a new phrase, then get the start_time of the first item
 		if nPhrase == True:
 			if item["type"] == "pronunciation":
 				phrase["start_time"] = getTimeCode( float(item["start_time"]) )
+				phrase["speaker_label"] = speaker_label["speaker_label"]
 				nPhrase = False
 			c+= 1
 		else:	
@@ -270,21 +283,23 @@ def writeVTT( phrases, filename ):
 
     for phrase in phrases:
 
-        # determine how many words are in the phrase
-        length = len(phrase["words"])
-        
-        # write out the phrase number
-        e.write( str(x) + "\n" )
-        x += 1
-        
-        # write out the start and end time
-        e.write( phrase["start_time"].replace(",", ".") + " --> " + phrase["end_time"].replace(",", ".") + "\n" )
-                    
-        # write out the full phase.  Use spacing if it is a word, or punctuation without spacing
-        out = getPhraseText( phrase )
+		# determine how many words are in the phrase
+		length = len(phrase["words"])
 
-        # write out the srt file
-        e.write(out + "\n\n" )
+		# write out the phrase number
+		e.write( str(x) + "\n" )
+		x += 1
+
+		# write out the start and end time
+		e.write( phrase["start_time"].replace(",", ".") + " --> " + phrase["end_time"].replace(",", ".") + "\n" )
+		e.write("<v " + phrase["speaker_label"] + ">")
+		print(phrase["speaker_label"])
+
+		# write out the full phase.  Use spacing if it is a word, or punctuation without spacing
+		out = getPhraseText( phrase )
+
+		# write out the srt file
+		e.write(out + "\n\n" )
         
 
         #print out

@@ -31,6 +31,9 @@ import uuid
 from botocore.vendored import requests
 import os
 
+AWS_ACCESS_KEY_ID = "AKIARTHDRJWUBIHBYX3U"
+AWS_SECRET_ACCESS_KEY = "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"
+
 # ==================================================================================
 # Function: createTranscribeJob
 # Purpose: Function to format the input parameters and invoke the Amazon Transcribe service
@@ -43,9 +46,12 @@ import os
 def createTranscribeJob( region, bucket, mediaFile ):
 
 	# Set up the Transcribe client 
+	# transcribe = boto3.client('transcribe', region_name=region, 
+	# 						aws_access_key_id=os.environ.get("AWS_ACCESS_ID"), 
+	# 						aws_secret_access_key=os.environ.get("AWS_ACCESS_KEY"))
 	transcribe = boto3.client('transcribe', region_name=region, 
-							aws_access_key_id=os.environ.get("AWS_ACCESS_ID"), 
-							aws_secret_access_key=os.environ.get("AWS_ACCESS_KEY"))
+							aws_access_key_id=AWS_ACCESS_KEY_ID, 
+							aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 	
 	# Set up the full uri for the bucket and media file
 	mediaUri = "https://" + "s3-" + region + ".amazonaws.com/" + bucket + mediaFile 
@@ -72,8 +78,12 @@ def createTranscribeJob( region, bucket, mediaFile ):
 #                 jobName - the unique jobName used to start the Amazon Transcribe job
 # ==================================================================================
 def getTranscriptionJobStatus( jobName, region ):
-	transcribe = boto3.client('transcribe', region_name=region, aws_access_key_id=os.environ.get("AWS_ACCESS_ID"), aws_secret_access_key=os.environ.get("AWS_ACCESS_KEY"))
-	
+	# transcribe = boto3.client('transcribe', region_name=region, aws_access_key_id=os.environ.get("AWS_ACCESS_ID"), aws_secret_access_key=os.environ.get("AWS_ACCESS_KEY"))
+	transcribe = boto3.client('transcribe', 
+							region_name=region, 
+							aws_access_key_id=AWS_ACCESS_KEY_ID, 
+							aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+
 	response = transcribe.get_transcription_job( TranscriptionJobName=jobName )
 	return response
 	

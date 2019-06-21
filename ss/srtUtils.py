@@ -194,6 +194,7 @@ def getPhrasesFromTranscript( transcript ):
 		if nPhrase == True:
 			if item["type"] == "pronunciation":
 				phrase["start_time"] = getTimeCode( float(item["start_time"]) )
+				phrase["speaker_label"] = item["speaker_label"]
 				nPhrase = False
 			c+= 1
 		else:	
@@ -278,6 +279,7 @@ def writeSRT( phrases, filename ):
 		
 		# write out the start and end time
 		e.write( phrase["start_time"] + " --> " + phrase["end_time"] + "\n" )
+		e.write("<v " + phrase["speaker_label"] + ">")
 					
 		# write out the full phase.  Use spacing if it is a word, or punctuation without spacing
 		out = getPhraseText( phrase )
