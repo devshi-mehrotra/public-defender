@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "grunt-mustache-render": "^1.9.2",
-    "highlight.js": "^9.13.1",
+    "highlight.js": "^10.4.1",
     "mustache": "^2.2.1"
   },
   "description": "This repository is for managing the [JW Player Developer Demos](//developer.jwplayer.com/jw-player/demos/). It includes demos and code samples from the JW Player team as well as a Developer Showcase highlighting demos submitted by our developer community.",
